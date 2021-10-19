@@ -1,24 +1,29 @@
 # Maintainer: Erik Dubois <erik.dubois@gmail.com>
-pkgname=twist-calamares-config-i3-git
-_pkgname=twist-calamares-config-i3
-_destname="/etc/calamares"
-_licensedir="/usr/share/twistlinux/licenses/"
-pkgver=21.09
-pkgrel=04
-pkgdesc="calamares for twistlinux"
+# Edited: PeterDauwe <bobo5290461@gmail.com>
+
+_namepackage="${PWD##*/}"
+pkgname=${_namepackage}
+_destname1="/etc"
+_destname2="/etc"
+_destname3="/etc"
+_destname4="/etc"
+_date_mybuild="$(date +%y)_$(date +%m)_$(date +%d)"
+_hour_mybuild="$(date +%H)$(date +%M)$(date +%S)"
+pkgver=${_date_mybuild}
+pkgrel=${_hour_mybuild}
+pkgdesc=${_namepackage}
 arch=('any')
-url="https://github.com/twistlinux/${_pkgname}"
+url="https://github.com/PeterDauwe"
 license=('GPL3')
 makedepends=('git')
 depends=()
+conflicts=()
+replaces=()
 provides=("${pkgname}")
 options=(!strip !emptydirs)
-source=(${_pkgname}::"git+https://github.com/twistlinux/${_pkgname}.git")
+source=(${pkgname}::"git+${url}/${pkgname}")
 sha256sums=('SKIP')
-install='readme.install'
 package() {
-	mkdir -p "${pkgdir}${_licensedir}${_pkgname}"
-	mv "${srcdir}/${_pkgname}/"LICENSE "${pkgdir}${_licensedir}${_pkgname}/LICENSE"
-	mkdir -p "${pkgdir}${_destname}"
-	cp -r "${srcdir}/${_pkgname}/calamares/"* "${pkgdir}${_destname}"
+	install -dm755 ${pkgdir}${_destname1}
+	cp -r ${srcdir}/${pkgname}${_destname1}/* ${pkgdir}${_destname1}
 }
